@@ -39,7 +39,10 @@ def Image2Index(path, sensor):
         R555 = image[:,:,20] # AVIRIS (560nm)
         # B2/B11 Sentinel2
         R1610 = image[:,:,132] # AVIRIS (1612nm)
-        # RG
+        # NDWI
+        R860 = image[:,:,53] # AVIRIS (860nm)
+        R1240 = image[:,:,93] # AVIRIS (1244nm)
+        """# RG
         R501 = image[:,:,14] # AVIRIS (501nm)
         R521 = image[:,:,16]; R530 = image[:,:,17] 
         R540 = image[:,:,18]; R569 = image[:,:,21] 
@@ -49,12 +52,12 @@ def Image2Index(path, sensor):
         R655 = image[:,:,32]; R665 = image[:,:,33]; R685 = image[:,:,35]
         R694 = image[:,:,36]; R704 = image[:,:,37]; R714 = image[:,:,38]
         R724 = image[:,:,39]; R734 = image[:,:,40]; R753 = image[:,:,42]
-        R763 = image[:,:,43]; R773 = image[:,:,44]
+        R763 = image[:,:,43]; R773 = image[:,:,44]"""
         # WAF
         R1343 = image[:,:,105] # AVIRIS (1343nm)
         R1563 = image[:,:,127] # AVIRIS (1562nm)
         R1453 = image[:,:,116] # AVIRIS (152nm)
-        # Índice de prueba 2
+        # NDOI
         R599 = image[:,:,25] # AVIRIS (599nm)
         R870 = image[:,:,55] # AVIRIS (870nm)
         
@@ -73,22 +76,18 @@ def Image2Index(path, sensor):
         # CHL
         Av_CHL = np.log(abs(max(R433.mean(),R490.mean(),R510.mean())/R555.astype(float)))
         # NDVI
-        Av_NDVI = (R.astype(float) - R889.astype(float))/(R + R889)
+        Av_NDVI = (R889.astype(float) - R.astype(float))/(R889 + R)
         # B2/B11 Sentinel2
         Av_S211 = B.astype(float)/R1610
-        """# RG
-        Av_RG = max(R501.mean(),R510.mean(),R521.mean(),R530.mean(),R540.mean(),G.mean(),R555.mean(),R569.mean())
-        # RR
-        Av_RR = max(R618.mean(),R628.mean(),R.mean(),R647.mean(),R660.mean(),R667.mean(),R655.mean(),R665.mean(),
-                    R675.mean(),R685.mean(),R694.mean(),R704.mean(),R714.mean(),R724.mean(),R734.mean(),R743.mean(),
-                    R753.mean(),R763.mean(),R773.mean())"""
+        # NDWI
+        Av_NDWI = (R860.astype(float) - R1240.astype(float))/(R860 + R1240)
         # WAF
         Av_WAF = (R1343.astype(float) - R1563.astype(float))/2 - R1453
-        # Índice prueba 2
-        Av_I2 = (R599.astype(float) - R870.astype(float))/(R599 + R870)
+        # NDOI
+        Av_NDOI = (R599.astype(float) - R870.astype(float))/(R599 + R870)
         
-        indexes = np.array([Av_FI, Av_HI, Av_OSI, Av_RAI, Av_CDOM, Av_CHL, Av_NDVI, Av_S211, Av_WAF, Av_I2])#Av_RG, Av_RR, Av_WAF, Av_I2])
-        index_name = [sensor, "FI", "HI", "OSI", "RAI", "CDOM", "CHL", "NDVI", "B211", "WAF", "NDOI"]#"RG", "RR", "WAF", "NDOI"]
+        indexes = np.array([Av_NDOI, Av_RAI, Av_FI, Av_HI, Av_OSI, Av_WAF, Av_CDOM, Av_CHL, Av_NDVI, Av_NDWI, Av_S211])
+        index_name = [sensor, "NDOI", "RAI", "FI", "HI", "OSI", "WAF", "CDOM", "CHL", "NDVI", "NDWI", "Ratio B2/B11"]
     
     elif sensor == "HICO":
         # FI
@@ -108,7 +107,7 @@ def Image2Index(path, sensor):
         R490 = B
         R510 = image[:,:,28] # HICO (513nm)
         R555 = image[:,:,35] # HICO (553nm)
-        # prueba 2
+        # NDOI
         R599 = image[:,:,43] # HICO (599nm)
         R870 = image[:,:,91] # HICO (873nm)
         
@@ -125,12 +124,12 @@ def Image2Index(path, sensor):
         # CHL
         Hico_CHL = np.log(max(R433.mean(),R490.mean(),R510.mean())/R555)
         # NDVI
-        Hico_NDVI = (R.astype(float) - R889.astype(float))/(R + R889)
-        # Índice prueba 2
-        Hico_I2 = (R599.astype(float) - R870.astype(float))/(R599 + R870)
+        Hico_NDVI = (R889.astype(float) - R.astype(float))/(R889 + R)
+        # NDOI
+        Hico_NDOI = (R599.astype(float) - R870.astype(float))/(R599 + R870)
         
-        indexes = np.array([Hico_FI, Hico_OSI, Hico_RAI, Hico_CDOM, Hico_CHL, Hico_NDVI, Hico_I2])
-        index_name = [sensor, "FI", "OSI", "RAI", "CDOM", "CHL", "NDVI", "NDOI"]
+        indexes = np.array([Hico_NDOI, Hico_RAI, Hico_FI, Hico_OSI, Hico_CDOM, Hico_CHL, Hico_NDVI])
+        index_name = [sensor, "NDOI", "RAI", "FI", "OSI", "CDOM", "CHL", "NDVI"]
     
     elif sensor == "MERIS":
         #  FI
@@ -150,7 +149,7 @@ def Image2Index(path, sensor):
         R490 = B
         R510 = image[:,:,3] # MERIS (510nm)
         R555 = G
-        # Índice prueba 2
+        # NDOI
         R599 = G 
         R870 = image[:,:,11] # MERIS (865nm) B13
         
@@ -167,12 +166,12 @@ def Image2Index(path, sensor):
         # CHL
         Env_CHL = np.log(max(R433[:,:].mean(),R490[:,:].mean(),R510[:,:].mean())/(R555[:,:]))
         # NDVI
-        Env_NDVI = (R[:,:] - R885[:,:])/(R[:,:] + R885[:,:])
-        # Índice prueba 2
-        Env_I2 = (R599[:,:] - R870[:,:])/(R599[:,:] + R870[:,:])
+        Env_NDVI = (R885[:,:] - R[:,:])/(R885[:,:] + R[:,:])
+        # NDOI
+        Env_NDOI = (R599[:,:] - R870[:,:])/(R599[:,:] + R870[:,:])
         
-        indexes = np.array([Env_FI, Env_OSI, Env_RAI, Env_CDOM, Env_CHL, Env_NDVI, Env_I2])
-        index_name = [sensor, "FI", "OSI", "RAI", "CDOM", "CHL", "NDVI", "NDOI"]
+        indexes = np.array([Env_NDOI, Env_RAI, Env_FI, Env_OSI, Env_CDOM, Env_CHL, Env_NDVI])
+        index_name = [sensor, "NDOI", "RAI", "FI", "OSI", "CDOM", "CHL", "NDVI"]
     
     else: print("Sensor not available.")
 

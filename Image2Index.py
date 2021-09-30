@@ -221,30 +221,24 @@ def get_values(pixels, indexes): # Get selected pixel values from all indexes
     
     return values
 
-def ecualizar(v):
-    """#Genera el historama de la imagen
-    hist,bins = np.histogram(v)
-     
-    #Genera la función de distribución acumulada (cdf por sus siglas en inglés)
-    cdf = hist.cumsum()
-    cdf_normalized = cdf * hist.max()/ cdf.max()
-     
-    #Genera los gráficos del histograma y de la función de distribución acumulada
-    plt.plot(cdf_normalized, color = 'b')
-    plt.hist(v, color = 'r')
-    plt.legend(('cdf','histograma'), loc = 'upper right')
-    plt.show()"""
+def ecualise(X, sensor, index, represent = None, Y=None, classes = None, bins = 35):
+    if represent == "Simple":
+        plt.hist(X, color='#F2AB6D', rwidth=0.85)
+        plt.title(sensor)
+        plt.xlabel(index)
+        plt.ylabel('Frecuencia')
+
+    if represent == "Stack":
+        kwargs = dict(alpha=0.5, bins=bins, density=True, stacked=True)
+        for clas in classes:
+            plt.hist(X[Y == clas], **kwargs, label=clas)
+        plt.title(sensor)
+        plt.xlabel(index)
+        plt.ylabel('Frecuencia')
+        plt.legend(prop={'size': 10})
     
-    image_histogram, bins = np.histogram(v.flatten(), density=True)
-    cdf = image_histogram.cumsum() # cumulative distribution function
-    cdf = 255 * cdf / cdf[-1] # normalize
-
-    # use linear interpolation of cdf to find new pixel values
-    image_equalized = np.interp(v.flatten(), bins[:-1], cdf)
-
-    return image_equalized.reshape(v.shape), cdf
     
-
+    
 
     
     

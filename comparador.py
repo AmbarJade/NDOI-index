@@ -31,9 +31,13 @@ for path in paths:
         X = t[i]
         j = 0 # Reiniciar contador de modelos
         
+        # Preprocesado: ecualizar histogramas
+        plt.figure()
+        im2in.ecualise(X, index_name[0], index_name[i+1], represent= "Stack", Y=Y, classes=classes)
+        
         # Dividir el conjunto en train, test y validation
         ###x, x_val, y, y_val = model_selection.train_test_split(X, Y, test_size=0.1, random_state=3)
-        X_train, X_test, y_train, y_test = model_selection.train_test_split(X, Y, test_size=0.3, random_state=3)
+        """X_train, X_test, y_train, y_test = model_selection.train_test_split(X, Y, test_size=0.3, random_state=3)
 
         # Aplicar modelos
         models = [ml.knn(X_train, y_train, X_test, y_test, Ks=8, representation = False), ml.dt(X_train, y_train, X_test, y_test, depth=7, representation = False), 
@@ -45,7 +49,7 @@ for path in paths:
             cnf_matrix = metrics.confusion_matrix(y_test, yhat, labels=classes)
             ml.plot_confusion_matrix(cnf_matrix, classes=classes, sensor=index_name[0], index=index_name[i+1], model = models_name[j], normalize=True)
             #print(metrics.classification_report(y_test, yhat))
-            j += 1
+            j += 1"""
 
 
     

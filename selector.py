@@ -9,7 +9,7 @@ import numpy as np
 #from comparador import path
 import json
 
-path = "data\HICO_2"
+path = "data\AVIRIS_1"
 WIDTH, HEIGHT = 1000, 1000
 topx, topy, botx, boty = 0, 0, 0, 0
 rect_id = None
@@ -77,6 +77,8 @@ for i in ["Water", "Oil"]: # Select different classes
     window.mainloop()
 
     dic[i] = convert_coordinates(vector, img.width()).tolist()
+    vector = np.array([[0,0,0,0]]) 
+
 
 json_store(path, dic)
 

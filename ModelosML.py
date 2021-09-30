@@ -7,6 +7,7 @@ Created on Thu Sep  2 12:30:30 2021
 import numpy as np
 import matplotlib.pyplot as plt
 import sklearn as sk
+import pandas as pd
 
 ############################## KNN ##############################
 def knn(X_train, y_train, X_val, y_val, Ks, representation = True):
@@ -216,3 +217,27 @@ def plot_confusion_matrix(cm, classes, sensor, index, model, normalize=False, cm
     xlab = model + ' predicted label'
     plt.xlabel(xlab)
     plt.show()
+
+######################### Pandas error dataframe #######################
+def error_df(sensor, index, model, classes, errors, df):
+    # Define if empty
+    if df.empty:
+        df = pd.DataFrame(columns = ["Sensor", "Date", "Index", "Model", "Accuracy"])
+        for clas in classes:
+            df[clas + " precision"] = None
+            df[clas + " f1-score"] = None
+            df[clas + " test pixels"] = None
+    
+    # Append line
+    error_list = [sensor[:-2], sensor[-1], index, model, errors["accuracy"]]
+    for clas in classes:
+        error_list += [errors[clas]["precision"], errors[clas]["f1-score"], errors[clas]["support"]]
+            
+    df.loc[len(df)] = error_list
+    
+    return df
+        
+
+
+
+

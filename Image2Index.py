@@ -87,7 +87,7 @@ def Image2Index(path, sensor):
         Av_NDOI = (R599.astype(float) - R870.astype(float))/(R599 + R870)
         
         indexes = np.array([Av_NDOI, Av_RAI, Av_FI, Av_HI, Av_OSI, Av_WAF, Av_CDOM, Av_CHL, Av_NDVI, Av_NDWI, Av_S211])
-        index_name = [sensor, "NDOI", "RAI", "FI", "HI", "OSI", "WAF", "CDOM", "CHL", "NDVI", "NDWI", "Ratio B2/B11"]
+        index_name = ["NDOI", "RAI", "FI", "HI", "OSI", "WAF", "CDOM", "CHL", "NDVI", "NDWI", "Ratio B2/B11"]
     
     elif sensor == "HICO":
         # FI
@@ -129,7 +129,7 @@ def Image2Index(path, sensor):
         Hico_NDOI = (R599.astype(float) - R870.astype(float))/(R599 + R870)
         
         indexes = np.array([Hico_NDOI, Hico_RAI, Hico_FI, Hico_OSI, Hico_CDOM, Hico_CHL, Hico_NDVI])
-        index_name = [sensor, "NDOI", "RAI", "FI", "OSI", "CDOM", "CHL", "NDVI"]
+        index_name = ["NDOI", "RAI", "FI", "OSI", "CDOM", "CHL", "NDVI"]
     
     elif sensor == "MERIS":
         #  FI
@@ -171,7 +171,7 @@ def Image2Index(path, sensor):
         Env_NDOI = (R599[:,:] - R870[:,:])/(R599[:,:] + R870[:,:])
         
         indexes = np.array([Env_NDOI, Env_RAI, Env_FI, Env_OSI, Env_CDOM, Env_CHL, Env_NDVI])
-        index_name = [sensor, "NDOI", "RAI", "FI", "OSI", "CDOM", "CHL", "NDVI"]
+        index_name = ["NDOI", "RAI", "FI", "OSI", "CDOM", "CHL", "NDVI"]
     
     else: print("Sensor not available.")
 

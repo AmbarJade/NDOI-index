@@ -9,12 +9,15 @@ import matplotlib.pyplot as plt
 from sklearn import *
 import ModelosML as ml
 import Image2Index as im2in
+import pandas as pd
 
 paths = ["data\AVIRIS_1", "data\AVIRIS_2", "data\MERIS_1", "data\MERIS_2", "data\HICO_1", "data\HICO_2"] 
+df = pd.DataFrame()
 
 for path in paths:
     # Cargar imagen y seleccionar píxeles
-    indexes, index_name = im2in.Image2Index(path, path[5:-2])
+    sensor = path[5:-2]
+    indexes, index_name = im2in.Image2Index(path, sensor)
 
     pixels, classes, Y = im2in.get_labels(path)
     t = im2in.get_values(pixels, indexes)
@@ -22,13 +25,13 @@ for path in paths:
 
     print("Empieza el bucle")
     for i in range(0, len(indexes)):
-        print(index_name[i+1])
+        print(index_name[i])
         X = t[i]
         j = 0 # Reiniciar contador de modelos
         
         # Preprocesado: ecualizar histogramas
         plt.figure()
-        im2in.histogram(X, index_name[0], index_name[i+1], represent= "Stack", Y=Y, classes=classes)
+        im2in.histogram(X, sensor, index_name[i], represent= "Stack", Y=Y, classes=classes)
         
         # Dividir el conjunto en train, test y validation
         ###x, x_val, y, y_val = model_selection.train_test_split(X, Y, test_size=0.1, random_state=3)
@@ -42,14 +45,14 @@ for path in paths:
             print('\t' + models_name[j])
             plt.figure()
             # Calcular y representar matrices de confusión
-            cnf_matrix = metrics.confusion_matrix(y_test, yhat, labels=classes)
-            ml.plot_confusion_matrix(cnf_matrix, classes=classes, sensor=index_name[0], index=index_name[i+1], model = models_name[j], normalize=True)
-            j += 1
+            #cnf_matrix = metrics.confusion_matrix(y_test, yhat, labels=classes)
+            #ml.plot_confusion_matrix(cnf_matrix, classes=classes, sensor=sensor, index=index_name[i], model = models_name[j], normalize=True)
             
             # Tabla de pandas para visualizar errores
             errors = metrics.classification_report(y_test, yhat, output_dict=True)
+            df = ml.error_df(path[5:], index_name[i], models_name[j], classes, errors, df)
+            j += 1
             
-
-
+df.to_excel('data\dataframe.xlsx')
     
 

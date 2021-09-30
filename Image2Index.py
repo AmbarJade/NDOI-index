@@ -221,7 +221,7 @@ def get_values(pixels, indexes): # Get selected pixel values from all indexes
     
     return values
 
-def ecualise(X, sensor, index, represent = None, Y=None, classes = None, bins = 35):
+def histogram(X, sensor, index, represent = None, Y=None, classes = None, bins = 35):
     if represent == "Simple":
         plt.hist(X, color='#F2AB6D', rwidth=0.85)
         plt.title(sensor)

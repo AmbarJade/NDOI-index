@@ -18,14 +18,9 @@ for path in paths:
 
     pixels, classes, Y = im2in.get_labels(path)
     t = im2in.get_values(pixels, indexes)
-    models_name = ["KNN", "Decision tree", "Logistic Regression", "Random Forest", "Ada Boost"]
-
-    #Y = np.array(["Water","Water","Water","Thin", "Thin", "Thin","Thick","Thick","Thick","Thick","t","Water","Water","Water","Thin", "Thin", "Thin","Thick","Thick","Thick","Thick","Thin"])
-    #X = np.array([[0],[0],[0],[-1], [-1], [-1],[1],[1],[1],[1],[-1],[0],[0],[0],[-1], [-1], [-1],[1],[1],[1],[1],[-1]])
-    #classes = ["Water","Thin","Thick"]
+    models_name = ["KNN", "Decision tree", "Random Forest", "Ada Boost"]
 
     print("Empieza el bucle")
-
     for i in range(0, len(indexes)):
         print(index_name[i+1])
         X = t[i]
@@ -33,23 +28,27 @@ for path in paths:
         
         # Preprocesado: ecualizar histogramas
         plt.figure()
-        im2in.ecualise(X, index_name[0], index_name[i+1], represent= "Stack", Y=Y, classes=classes)
+        im2in.histogram(X, index_name[0], index_name[i+1], represent= "Stack", Y=Y, classes=classes)
         
         # Dividir el conjunto en train, test y validation
         ###x, x_val, y, y_val = model_selection.train_test_split(X, Y, test_size=0.1, random_state=3)
-        """X_train, X_test, y_train, y_test = model_selection.train_test_split(X, Y, test_size=0.3, random_state=3)
+        X_train, X_test, y_train, y_test = model_selection.train_test_split(X, Y, test_size=0.3, random_state=3)
 
         # Aplicar modelos
         models = [ml.knn(X_train, y_train, X_test, y_test, Ks=8, representation = False), ml.dt(X_train, y_train, X_test, y_test, depth=7, representation = False), 
-                  ml.lor(X_train, y_train, X_test, y_test, representation = False), ml.rfc(X_train, y_train, X_test, y_test, 30, representation = False), 
-                  ml.abc(X_train, y_train, X_test, y_test, 30, representation = False)]
+                  ml.rfc(X_train, y_train, X_test, y_test, 30, representation = False),  ml.abc(X_train, y_train, X_test, y_test, 30, representation = False)]
 
         for yhat in models:
             print('\t' + models_name[j])
+            plt.figure()
+            # Calcular y representar matrices de confusión
             cnf_matrix = metrics.confusion_matrix(y_test, yhat, labels=classes)
             ml.plot_confusion_matrix(cnf_matrix, classes=classes, sensor=index_name[0], index=index_name[i+1], model = models_name[j], normalize=True)
-            #print(metrics.classification_report(y_test, yhat))
-            j += 1"""
+            j += 1
+            
+            # Tabla de pandas para visualizar errores
+            errors = metrics.classification_report(y_test, yhat, output_dict=True)
+            
 
 
     

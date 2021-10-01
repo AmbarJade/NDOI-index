@@ -35,7 +35,7 @@ for path in paths:
         
         # Dividir el conjunto en train, test y validation
         ###x, x_val, y, y_val = model_selection.train_test_split(X, Y, test_size=0.1, random_state=3)
-        X_train, X_test, y_train, y_test = model_selection.train_test_split(X, Y, test_size=0.3, random_state=3)
+        X_train, X_test, y_train, y_test = model_selection.train_test_split(X, Y, test_size=0.5, random_state=3)
 
         # Aplicar modelos
         models = [ml.knn(X_train, y_train, X_test, y_test, Ks=8, representation = False), ml.dt(X_train, y_train, X_test, y_test, depth=7, representation = False), 
@@ -53,6 +53,6 @@ for path in paths:
             df = ml.error_df(path[5:], index_name[i], models_name[j], classes, errors, df)
             j += 1
             
-df.to_excel('data\dataframe.xlsx')
+df.to_excel('data\dataframe50.xlsx')
     
 

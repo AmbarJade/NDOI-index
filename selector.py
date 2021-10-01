@@ -9,7 +9,7 @@ import numpy as np
 #from comparador import path
 import json
 
-path = "data\AVIRIS_1"
+path = "data\MERIS_2"
 WIDTH, HEIGHT = 1000, 1000
 topx, topy, botx, boty = 0, 0, 0, 0
 rect_id = None

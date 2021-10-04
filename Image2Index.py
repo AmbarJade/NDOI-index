@@ -87,7 +87,7 @@ def Image2Index(path, sensor):
         Av_NDOI = (R599.astype(float) - R870.astype(float))/(R599 + R870)
         
         indexes = np.array([Av_NDOI, Av_RAI, Av_FI, Av_HI, Av_OSI, Av_WAF, Av_CDOM, Av_CHL, Av_NDVI, Av_NDWI, Av_S211])
-        index_name = ["NDOI", "RAI", "FI", "HI", "OSI", "WAF", "CDOM", "CHL", "NDVI", "NDWI", "Ratio B2/B11"]
+        index_name = ["NDOI", "RAI", "FI", "HI", "OSI", "WAF", "CDOM", "CHL", "NDVI", "NDWI", "B2/B11"]
     
     elif sensor == "HICO":
         # FI

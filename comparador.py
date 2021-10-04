@@ -11,7 +11,7 @@ import ModelosML as ml
 import Image2Index as im2in
 import pandas as pd
 
-paths = ["data\HICO_1"]#["data\AVIRIS_1", "data\AVIRIS_2", "data\MERIS_1", "data\MERIS_2", "data\HICO_1", "data\HICO_2"] 
+paths = ["data\AVIRIS_1", "data\AVIRIS_2", "data\MERIS_1", "data\MERIS_2", "data\HICO_1", "data\HICO_2"] 
 df = pd.DataFrame()
 
 for path in paths:
@@ -53,6 +53,6 @@ for path in paths:
             df = ml.error_df(path[5:], index_name[i], models_name[j], classes, errors, df)
             j += 1
             
-df.to_excel('data\dataframe4.xlsx')
+df.to_excel('data\dataframe.xlsx')
     
 

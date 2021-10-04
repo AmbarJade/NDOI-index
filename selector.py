@@ -9,7 +9,7 @@ import numpy as np
 #from comparador import path
 import json
 
-path = "data\HICO_1"
+path = "data\MERIS_2"
 WIDTH, HEIGHT = 1000, 1000
 topx, topy, botx, boty = 0, 0, 0, 0
 rect_id = None
@@ -48,15 +48,16 @@ def convert_coordinates(vector, dim): # Coordinates are converted to dimension 1
             nvector = np.append(nvector, np.arange(dim*j + i[2], dim*j + i[3] + 1))
     return nvector
 
-def json_store(path, pixels):
-    with open(path + ".json", "w") as write_file:
+def json_store(path, extension, pixels):
+    with open(path + extension, "w") as write_file:
         json.dump(pixels, write_file)
 
+classes = ["Water", "Thick", "Thin"]
 
-for i in ["Water", "Oil"]: # Select different classes
+for clas in classes: # Select different classes
     # Create window to work
     window = tk.Tk()
-    window.title("Select Area:" + i)
+    window.title("Select Area:" + clas)
     window.geometry('%sx%s' % (WIDTH, HEIGHT))
     window.configure(background='grey')
 
@@ -76,10 +77,10 @@ for i in ["Water", "Oil"]: # Select different classes
 
     window.mainloop()
 
-    dic[i] = convert_coordinates(vector, img.width()).tolist()
+    dic[clas] = convert_coordinates(vector, img.width()).tolist()
     vector = np.array([[0,0,0,0]]) 
 
 
-json_store(path, dic)
+json_store(path, "-3.json", dic)
 
     

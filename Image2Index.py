@@ -187,11 +187,11 @@ def Image2Index(path, sensor):
     
     return indexes, index_name
 
-def get_labels(path): # Get labels from ROIs
+def get_labels(path, extension): # Get labels from ROIs
     pixels = []
     y = np.array([])
     
-    with open(path + ".json", "r") as read_file: # get ROIs
+    with open(path + extension, "r") as read_file: # get ROIs
         data = json.load(read_file)
 
     for i in data: # List of all pixel selected

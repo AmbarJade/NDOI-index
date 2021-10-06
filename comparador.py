@@ -53,6 +53,6 @@ for path in paths:
             df = ml.error_df(path[5:], index_name[i], models_name[j], classes, errors, df)
             j += 1
             
-df.to_excel('data\df_3classesKNN.xlsx')
+df.to_excel('data\df_3classesNDVI.xlsx')
     
 

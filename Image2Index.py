@@ -17,7 +17,7 @@ def Image2Index(path, sensor):
     # Load bands
     if sensor == "AVIRIS":
         # FI
-        R = image[:,:,28] # AVIRIS (band 29 - 638nm)
+        R = image[:,:,31] # AVIRIS (band 32 - 667nm)
         G = image[:,:,19] # AVIRIS (550nm)
         B = image[:,:,13] # AVIRIS (491nm)
         # HI
@@ -91,7 +91,7 @@ def Image2Index(path, sensor):
     
     elif sensor == "HICO":
         # FI
-        R = image[:,:,42] # HICO (639nm)
+        R = image[:,:,47] # HICO (667nm) 
         G = image[:,:,27] # HICO (553nm)
         B = image[:,:,11] # HICO (461nm)
         # OSI

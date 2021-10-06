@@ -19,7 +19,7 @@ for path in paths:
     sensor = path[5:-2]
     indexes, index_name = im2in.Image2Index(path, sensor)
 
-    pixels, classes, Y = im2in.get_labels(path, "-3.json")
+    pixels, classes, Y = im2in.get_labels(path, ".json")
     t = im2in.get_values(pixels, indexes)
     models_name = ["KNN", "Decision tree", "Random Forest", "Ada Boost"]
 
@@ -38,8 +38,8 @@ for path in paths:
         X_train, X_test, y_train, y_test = model_selection.train_test_split(X, Y, test_size=0.3, random_state=3)
 
         # Aplicar modelos
-        models = [ml.knn(X_train, y_train, X_test, y_test, Ks=8, representation = False)]#[ml.knn(X_train, y_train, X_test, y_test, Ks=8, representation = False), ml.dt(X_train, y_train, X_test, y_test, depth=7, representation = False), 
-                  #ml.rfc(X_train, y_train, X_test, y_test, 30, representation = False),  ml.abc(X_train, y_train, X_test, y_test, 30, representation = False)]
+        models = [ml.knn(X_train, y_train, X_test, y_test, Ks=8, representation = False), ml.dt(X_train, y_train, X_test, y_test, depth=7, representation = False), 
+                  ml.rfc(X_train, y_train, X_test, y_test, 30, representation = False),  ml.abc(X_train, y_train, X_test, y_test, 30, representation = False)]
 
         for yhat in models:
             #print('\t' + models_name[j])
@@ -53,6 +53,6 @@ for path in paths:
             df = ml.error_df(path[5:], index_name[i], models_name[j], classes, errors, df)
             j += 1
             
-df.to_excel('data\df_3classesKNN.xlsx')
+df.to_excel('data\df_2classes.xlsx')
     
 

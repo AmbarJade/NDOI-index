@@ -25,7 +25,6 @@ for path in paths:
 
     print("Empieza el bucle")
     for i in range(0, len(indexes)):
-        print(index_name[i])
         X = t[i]
         j = 0 # Reiniciar contador de modelos
         
@@ -38,8 +37,10 @@ for path in paths:
         X_train, X_test, y_train, y_test = model_selection.train_test_split(X, Y, test_size=0.3, random_state=3)
 
         # Aplicar modelos
-        models = [ml.knn(X_train, y_train, X_test, y_test, Ks=8, representation = False), ml.dt(X_train, y_train, X_test, y_test, depth=7, representation = False), 
-                  ml.rfc(X_train, y_train, X_test, y_test, 30, representation = False),  ml.abc(X_train, y_train, X_test, y_test, 30, representation = False)]
+        """
+        j = 0 # Reiniciar contador de modelos
+        models = ml.knn(X_train, y_train, X_test, y_test, Ks=8, representation = False)#[ml.knn(X_train, y_train, X_test, y_test, Ks=8, representation = False), ml.dt(X_train, y_train, X_test, y_test, depth=7, representation = False), 
+                  #ml.rfc(X_train, y_train, X_test, y_test, 30, representation = False),  ml.abc(X_train, y_train, X_test, y_test, 30, representation = False)]
 
         for yhat in models:
             #print('\t' + models_name[j])
@@ -52,8 +53,20 @@ for path in paths:
             errors = metrics.classification_report(y_test, yhat, output_dict=True)
             df = ml.error_df(path[5:], index_name[i], models_name[j], classes, errors, df)
             j += 1
+        """
+        # Aplicar un único modelo
+        yhat = ml.knn(X_train, y_train, X_test, y_test, Ks=8, representation = False)
+
+        plt.figure()
+        # Calcular y representar matrices de confusión
+        cnf_matrix = metrics.confusion_matrix(y_test, yhat, labels=classes)
+        ml.plot_confusion_matrix(cnf_matrix, classes=classes, sensor=sensor, index=index_name[i], model = models_name[0], normalize=True)
+        
+        # Tabla de pandas para visualizar errores
+        errors = metrics.classification_report(y_test, yhat, output_dict=True)
+        df = ml.error_df(path[5:], index_name[i], models_name[0], classes, errors, df)
             
-df.to_excel('data\df_2classes.xlsx')
+#df.to_excel('data\df_2classes.xlsx')
 
     
 

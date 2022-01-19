@@ -14,6 +14,9 @@ import pandas as pd
 paths = ["data\AVIRIS_1", "data\AVIRIS_2", "data\MERIS_1", "data\MERIS_2", "data\HICO_1", "data\HICO_2"] 
 df = pd.DataFrame()
 
+titles = ["AVIRIS - 17 May 2010", "AVIRIS - 18 May 2010", "MERIS - 26 April 2010", "MERIS - 2 May 2010", "HICO - 24 May 2010", "HICO - 28 May 2010", ]
+titles = ["AVIRIS 1", "AVIRIS 2", "MERIS 1", "MERIS 2", "HICO 1", "HICO 2", ]
+
 for path in paths:
     # Cargar imagen y seleccionar píxeles
     sensor = path[5:-2]
